@@ -37,7 +37,7 @@ function notifyUser(user) {
                 },
                 function (err, prs) {
                     prs.forEach(function (pr) {
-                        if(pr.user.login == user.github) {
+                        if(pr.user.login.toLowerCase() == user.github.toLowerCase()) {
                             return;
                         }
                         pr_labels = pr.labels.map(function(glabel) {
