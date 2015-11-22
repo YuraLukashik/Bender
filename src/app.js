@@ -7,7 +7,16 @@ var schedule = require('node-schedule');
 
 var projects = config.projects;
 
+function arrayToLower(arr) {
+    return arr.map(function(str) {
+        return str.toLowerCase();
+    });
+}
+
 function array_intersect(arr1, arr2) {
+    arr1 = arrayToLower(arr1);
+    arr2 = arrayToLower(arr2);
+
     var r = arr1.filter(function(n) {
         return arr2.indexOf(n) != -1
     });
