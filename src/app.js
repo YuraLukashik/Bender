@@ -53,7 +53,7 @@ function notifyUsers() {
 }
 
 schedule.scheduleJob(config.notifications_time, function() {
-    //sendNotifications();
+    notifyUsers();
 });
 
 bot.on('message', function(data) {
