@@ -7,40 +7,21 @@
     },
     "users": [
         {
-            "name": "Yura Lukashik",
-            "github": "yuralukashik",
-            "slack": "yuralukashik",
-            "checked_label": "Yura Checked"
-        },
-        {
-            "name": "Aleh Kashnikau",
-            "github": "mkusher",
-            "slack": "mkusher",
-            "checked_label": "Aleh Checked"
-        },
-        {
-            "name": "Yura Lukashik",
-            "github": "darya",
-            "slack": "darya"
+            "name": "firstname lastname",
+            "github": "github username",
+            "slack": "slack username",
+            "checked_label": "like Username Checked"
         }
     ],
     "projects": [
         {
-            "name": "api",
-            "user": "EHRWorks",
-            "repo": "api",
-            "users": ["yuralukashik", "darya", "mkusher"],
-            "include_labels": ["RFC"],
-            "exclude_labels": ["blocked"]
-        },
-        {
-            "name": "front",
-            "user": "EHRWorks",
-            "repo": "front",
-            "users": ["yuralukashik", "mkusher"],
+            "name": "project name",
+            "user": "owner user or organization",
+            "repo": "repo name",
+            "users": ["github username1", "github username2"],
             "include_labels": ["RFC"],
             "exclude_labels": ["blocked"]
         }
     ],
-    "notifications_time": "1 * * * * *"
+    "notifications_time": "0 0 10 * * *"
 }
