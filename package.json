@@ -2,9 +2,10 @@
   "name": "bender",
   "version": "0.0.1",
   "description": "slack bot",
-  "main": "index.js",
+  "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "src/app.js"
   },
   "repository": {
     "type": "git",
