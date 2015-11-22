@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var config = require(__dirname+'/../app/config.json');
 
 var bot = require('./slack_bot');
