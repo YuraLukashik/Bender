@@ -1,0 +1,28 @@
+{
+    "github": {
+        "token": ""
+    },
+    "slack": {
+        "token": ""
+    },
+    "users": [
+        {
+            "name": "Yura Lukashik",
+            "github": "yuralukashik",
+            "slack": "yuralukashik"
+        },
+        {
+            "name": "Yura Lukashik",
+            "github": "darya",
+            "slack": "darya"
+        }
+    ],
+    "projects": [
+        {
+            "name": "api",
+            "user": "EHRWorks",
+            "repo": "api",
+            "users": ["yuralukashik", "darya"]
+        }
+    ]
+}

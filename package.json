@@ -1,0 +1,23 @@
+{
+  "name": "bender",
+  "version": "0.0.1",
+  "description": "slack bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YuraLukashik/Bender.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YuraLukashik/Bender/issues"
+  },
+  "homepage": "https://github.com/YuraLukashik/Bender#readme",
+  "dependencies": {
+    "github": "^0.2.4",
+    "slackbots": "^0.4.0"
+  }
+}
