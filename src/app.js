@@ -9,7 +9,7 @@ var projects = config.projects;
 
 function arrayToLower(arr) {
     return arr.map(function(str) {
-        return str.toLowerCase();
+        return str && str.toLowerCase();
     });
 }
 
@@ -37,6 +37,9 @@ function notifyUser(user) {
                 },
                 function (err, prs) {
                     prs.forEach(function (pr) {
+                        if(pr.user.login == user.github) {
+                            return;
+                        }
                         pr_labels = pr.labels.map(function(glabel) {
                             return glabel.name;
                         });
