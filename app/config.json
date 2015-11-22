@@ -9,7 +9,14 @@
         {
             "name": "Yura Lukashik",
             "github": "yuralukashik",
-            "slack": "yuralukashik"
+            "slack": "yuralukashik",
+            "checked_label": "Yura Checked"
+        },
+        {
+            "name": "Aleh Kashnikau",
+            "github": "mkusher",
+            "slack": "mkusher",
+            "checked_label": "Aleh Checked"
         },
         {
             "name": "Yura Lukashik",
@@ -22,7 +29,18 @@
             "name": "api",
             "user": "EHRWorks",
             "repo": "api",
-            "users": ["yuralukashik", "darya"]
+            "users": ["yuralukashik", "darya", "mkusher"],
+            "include_labels": ["RFC"],
+            "exclude_labels": ["blocked"]
+        },
+        {
+            "name": "front",
+            "user": "EHRWorks",
+            "repo": "front",
+            "users": ["yuralukashik", "mkusher"],
+            "include_labels": ["RFC"],
+            "exclude_labels": ["blocked"]
         }
-    ]
+    ],
+    "notifications_time": "1 * * * * *"
 }
