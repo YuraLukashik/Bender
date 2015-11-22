@@ -47,7 +47,7 @@ function notifyUser(user) {
                            array_intersect(pr_labels, [user.checked_label])) {
                             return;
                         }
-                        bot.postMessageToUser(user.slack, "{"+project.name+"} "+pr.html_url);
+                        bot.postMessageToUser(user.slack, "["+project.name+"]: "+pr.title+" "+pr.html_url+" by "+pr.user.login);
                     });
                 }
             );
