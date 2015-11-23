@@ -19,6 +19,7 @@
   "homepage": "https://github.com/YuraLukashik/Bender#readme",
   "dependencies": {
     "github": "^0.2.4",
+    "mocha": "^2.3.4",
     "node-schedule": "^0.5.1",
     "q": "^1.4.1",
     "slackbots": "^0.4.0"
