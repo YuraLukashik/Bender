@@ -2,10 +2,10 @@
   "name": "bender",
   "version": "0.0.1",
   "description": "slack bot",
-  "main": "src/app.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "src/app.js"
+    "test": "mocha --compilers js:babel-register specs/Bot.spec.js",
+    "start": "build/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,9 +18,26 @@
   },
   "homepage": "https://github.com/YuraLukashik/Bender#readme",
   "dependencies": {
+    "babel-polyfill": "^6.2.0",
+    "babel-runtime": "^5.8.34",
     "github": "^0.2.4",
     "node-schedule": "^0.5.1",
     "q": "^1.4.1",
     "slackbots": "^0.4.0"
+  },
+  "devDependencies": {
+    "babel": "^5.8.34",
+    "babel-cli": "^6.2.0",
+    "babel-core": "^6.2.1",
+    "babel-plugin-syntax-async-functions": "^6.1.18",
+    "babel-preset-es2015": "^6.1.18",
+    "babel-preset-stage-0": "^6.1.18",
+    "babel-register": "^6.2.0",
+    "chai": "^3.4.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.0",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
   }
 }
