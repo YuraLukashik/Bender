@@ -3,4 +3,6 @@ export default function constructor(){
         bot.angryReply(user);
     }
     Talk.canHandle = function(){ return false; };
+
+    return Talk;
 }
