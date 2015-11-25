@@ -1,4 +1,4 @@
-var config = require('./config');
+var config = require('../app/config_prod.json');
 var GitHubApi = require("github");
 
 var github = new GitHubApi({
