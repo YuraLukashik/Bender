@@ -12,7 +12,7 @@ let prevIndex = -1;
 function getRandomArrayItem(arr) {
     let index;
     while((index = Math.floor(Math.random() * arr.length)) == prevIndex){}
-    prevIntex = index;
+    prevIndex = index;
     return arr[index];
 }
 export default class Bot {
