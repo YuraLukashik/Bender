@@ -30,14 +30,18 @@ describe("Bot", function() {
         it("handles data with type message", function() {
             bot.wakeUp();
             slackStub.callback({type: "message"});
-            expect(bot.commands.run).to.be.called;
+            setTimeout(function(){
+                expect(bot.commands.run).to.be.called;
+            }, 0);
         });
     });
     describe(".answer(message)", function() {
         it("runs commands", function() {
             bot.wakeUp();
             bot.answer({type: "message", user: "Test"})
-            expect(bot.commands.run).to.be.called;
+            setTimeout(function(){
+                expect(bot.commands.run).to.be.called;
+            }, 0);
         });
     });
 });
