@@ -16,7 +16,7 @@ function PullsCommandConstructor(github) {
                 notifyUser(bot, projects, user);
             });
         });
-    }
+    };
     return PullsCommand;
 
 
