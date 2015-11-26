@@ -8,37 +8,38 @@ export default class SlackProvider {
     constructor(config) {
         this.slack = new Slack(config);
     }
+    get name() {
+        return this.slack.name;
+    }
     onMessage(callback) {
         this.slack.on("message", data => {
             if (data.type !== 'message') {
                 return;
             }
-            const message = {
-                text: data.text
-            };
             this.findUserById(data.user).then(userName => {
                 if (userName) {
-                    message.user = userName;
-                } else {
-                    message.user = data.user;
+                    data.username = userName;
                 }
                 return this.findChannelById(data.channel);
             }).then(channel => {
-                console.log(channel);
+                data.isDirect = data.channel[0] === 'D';
+                data.channelName = channel;
             }).then(() => {
-                console.log(message);
-                //callback(message);
+                callback(data);
             });
         })
     }
     postMessageToUser() {
-        return this.slack.apply(this.slack, argumets);
+        return this.slack.postMessageToUser.apply(this.slack, arguments);
+    }
+    postMessageToChannel() {
+        return this.slack.postMessageToChannel.apply(this.slack, arguments);
     }
     findUserById(userId) {
         if(slackUserMap[userId]) {
             return Promise.resolve(slackUserMap[userId]);
         } else {
-            this.__updateSlackUserMap().then(() => {
+            return this.__updateSlackUserMap().then(() => {
                 return slackUserMap[userId];
             })
         }
@@ -47,25 +48,22 @@ export default class SlackProvider {
         if(slackChannelMap[channelId]) {
             return Promise.resolve(slackChannelMap[channelId]);
         } else {
-            this.__updateSlackChannelMap().then(() => {
+            return this.__updateSlackChannelMap().then(() => {
                 return slackChannelMap[channelId];
             });
         }
     }
 
     __updateSlackChannelMap() {
-        return this.slack.getChannels()
-        .then(function(resp) {
+        return this.slack.getChannels().then(function(resp) {
             resp.channels.forEach(function(channel) {
-                console.log(channel);
                 slackChannelMap[channel.id] = channel.name;
             });
         });
     }
 
     __updateSlackUserMap() {
-        return this.slack.getUsers()
-        .then(function(resp) {
+        return this.slack.getUsers().then(function(resp) {
             resp.members.forEach(function(user) {
                 slackUserMap[user.id] = user.name;
             });

@@ -1,7 +1,7 @@
 export default PullsCommandConstructor;
 function PullsCommandConstructor(github) {
-    function PullsCommand(user, bot, projects) {
-        bot.replyToUser(user, "Ok, wait...").then(() => {
+    function PullsCommand(bot, message, user, projects) {
+        bot.replyToMessage(message, "Ok, wait...").then(() => {
             return notifyUser(bot, projects, user);
         });
     }
@@ -55,15 +55,15 @@ function PullsCommandConstructor(github) {
                     const pr_labels = pr.labels.map(function(glabel) {
                         return glabel.name;
                     });
-                    if(array_intersect(pr_labels, project.exclude_labels) ||
-                       array_intersect(pr_labels, [user.checked_label])) {
-                           return;
-                       }
-                       bot.replyToUser(user, `[${project.name}]: ${pr.title} ${pr.html_url} by ${pr.user.login}`);
+                    if(
+                        array_intersect(pr_labels, project.exclude_labels)
+                            || array_intersect(pr_labels, [user.checked_label])
+                    ) {
+                        return;
+                    }
+                    bot.replyToUser(user, `[${project.name}]: ${pr.title} ${pr.html_url} by ${pr.user.login}`);
                 });
-            }
-                                    );
+            });
         });
     }
-
 }

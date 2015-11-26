@@ -4,7 +4,7 @@
   "description": "slack bot",
   "main": "build/index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-register specs/Bot.spec.js",
+    "test": "mocha --compilers js:babel-register specs/*.js",
     "start": "build/index.js"
   },
   "repository": {

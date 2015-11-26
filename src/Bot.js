@@ -14,27 +14,38 @@ export default class Bot {
                 if(this.isMine(message)) {
                     return;
                 }
-                this.answer(message);
+                if (isToMe) {
+                    this.answer(message);
+                }
             });
         });
     }
     isToMe(message) {
-        return new Promise.resolve(true);
+        return Promise.resolve(message.isDirect);
     }
     isMine(message) {
         return message.username === this.slack.name;
     }
     answer(message) {
-        return this.commands.run(this, message, message.user, this.projects);
+        return this.commands.run(
+            this,
+            message,
+            this.usersService.findBySlack(message.username),
+            this.projects
+        );
     }
     replyToUser(slackUser, messageText) {
-        console.log("Going to answer", slackUser, messageText);
         return this.slack.postMessageToUser(slackUser.slack || slackUser, messageText);
     }
     replyToChannel(channel, messageText) {
+        return this.slack.postMessageToChannel(channel, messageText);
     }
     replyToMessage(message, replyText) {
-        return this.replyToUser(message.user, replyText);
+        if (message.isDirect) {
+            return this.replyToUser(message.username, replyText);
+        } else {
+            return this.replyToChannel(message.channelName, replyText);
+        }
     }
     notifyUsersAboutPRs(users) {
     }

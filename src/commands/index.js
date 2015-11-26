@@ -5,12 +5,13 @@ export default class Commands {
     constructor(github) {
         this.github = github;
         this.commands = {
-            pulls: PullsCommand(github)
+            pulls: PullsCommand(github),
+            talk: TalkCommand()
         };
-        this.fallbackCommand = TalkCommand();
+        this.fallbackCommand = this.getCommand("talk");
     }
     getCommand(commandName) {
-        this.commands[commandName];
+        return this.commands[commandName];
     }
     run(bot, message, user, data){
         const commands = Object.keys(this.commands).map(commandName => {
@@ -20,10 +21,10 @@ export default class Commands {
         });
         if (commands.length) {
             commands.forEach(command => {
-                command(user, bot, data);
+                command(bot, message, user, data);
             });
         } else {
-            this.fallbackCommand(user, bot, data);
+            this.fallbackCommand(bot, message, user, data);
         }
     }
 }

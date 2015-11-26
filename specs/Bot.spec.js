@@ -6,14 +6,14 @@ import {Promise} from "q";
 chai.use(sinonChai);
 
 const slackStub = {
-    on: function(str, callback) {
+    onMessage: function(callback) {
         this.callback = callback;
     },
     postMessageToUser: sinon.spy(),
     name: "Bender"
 };
 const usersServiceStub = {
-    findBySlackId: function(){
+    findBySlack: function(){
         return Promise.resolve({});
     }
 };
