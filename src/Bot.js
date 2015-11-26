@@ -48,5 +48,6 @@ export default class Bot {
         }
     }
     notifyUsersAboutPRs(users) {
+        return this.commands.get("pulls").notifyUsers(this, this.projects, users);
     }
 }
