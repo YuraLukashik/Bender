@@ -1,20 +1,6 @@
 import PullsCommand from "./commands/pulls";
 import {Promise} from "q";
 
-const angryReplies = [
-    "What do you want from me?",
-    "And what now?",
-    "?",
-    "...",
-    "I hate you"
-];
-let prevIndex = -1;
-function getRandomArrayItem(arr) {
-    let index;
-    while((index = Math.floor(Math.random() * arr.length)) == prevIndex){}
-    prevIndex = index;
-    return arr[index];
-}
 export default class Bot {
     constructor(slack, usersService, projects, commands) {
         this.slack = slack;
@@ -23,14 +9,12 @@ export default class Bot {
         this.commands = commands;
     }
     wakeUp() {
-        this.slack.on("message", data => {
-            this.isToMe(data).then(isToMe => {
-                if(this.isMine(data)) {
+        this.slack.onMessage(message => {
+            this.isToMe(message).then(isToMe => {
+                if(this.isMine(message)) {
                     return;
                 }
-                if(data.type == "message" && isToMe) {
-                    this.answer(data);
-                }
+                this.answer(message);
             });
         });
     }
@@ -41,9 +25,7 @@ export default class Bot {
         return message.username === this.slack.name;
     }
     answer(message) {
-        return this.usersService.findBySlackId(message.user).then(user => {
-            return this.commands.run(this, message, user, this.projects);
-        });
+        return this.commands.run(this, message, message.user, this.projects);
     }
     replyToUser(slackUser, messageText) {
         console.log("Going to answer", slackUser, messageText);
@@ -51,9 +33,9 @@ export default class Bot {
     }
     replyToChannel(channel, messageText) {
     }
-    notifyUsersAboutPRs(users) {
+    replyToMessage(message, replyText) {
+        return this.replyToUser(message.user, replyText);
     }
-    angryReply(user) {
-        return this.replyToUser(user, getRandomArrayItem(angryReplies));
+    notifyUsersAboutPRs(users) {
     }
 }

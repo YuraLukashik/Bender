@@ -23,25 +23,8 @@ export default class UsersService {
     }
 
     findBySlackId(id) {
-        if(slackMap[id]) {
-            return q.fcall(() => {
-                return this.findBySlack(slackMap[id]);
-            });
-        } else {
-            return this.__updateSlackMap()
-            .then(() => {
-                return this.findBySlack(slackMap[id]);
-            });
-        }
-    }
-
-    __updateSlackMap() {
-        return this.slack.getUsers()
-        .then(function(resp) {
-            resp.members.forEach(function(user) {
-                slackMap[user.id] = user.name;
-            });
+        this.slack.findUserById(id).then(userName => {
+            return this.findBySlack(userName);
         });
     }
-
 }
