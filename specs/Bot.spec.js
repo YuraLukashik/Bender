@@ -10,7 +10,10 @@ const slackStub = {
         this.callback = callback;
     },
     postMessageToUser: sinon.spy(),
-    name: "Bender"
+    name: "Bender",
+    findIdByUser: function(){
+        return Promise.resolve(1);
+    }
 };
 const usersServiceStub = {
     findBySlack: function(){
