@@ -35,6 +35,7 @@ export default class SlackProvider {
     postMessageToChannel() {
         return this.slack.postMessageToChannel.apply(this.slack, arguments);
     }
+
     findUserById(userId) {
         if(slackUserMap[userId]) {
             return Promise.resolve(slackUserMap[userId]);
@@ -44,6 +45,22 @@ export default class SlackProvider {
             })
         }
     }
+
+    findIdByUser(userName) {
+        const id = Object.keys(slackUserMap).find(id => {
+            return slackUserMap[id] === userName;
+        });
+        if (id) {
+            return Promise.resolve(id);
+        } else {
+            return this.__updateSlackUserMap().then(() => {
+                return Object.keys(slackUserMap).find(id => {
+                    return slackUserMap[id] === userName;
+                });
+            });
+        }
+    }
+
     findChannelById(channelId) {
         if(slackChannelMap[channelId]) {
             return Promise.resolve(slackChannelMap[channelId]);

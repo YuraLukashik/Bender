@@ -21,7 +21,12 @@ export default class Bot {
         });
     }
     isToMe(message) {
-        return Promise.resolve(message.isDirect);
+        if(message.isDirect) {
+            return Promise.resolve(true);
+        }
+        return this.slack.findIdByUser(this.slack.name.toLowerCase()).then(id => {
+            return message.text.indexOf(`<@${id}>`) !== -1;
+        });
     }
     isMine(message) {
         return message.username === this.slack.name;
