@@ -4,21 +4,27 @@ import TalkCommand from "./talk";
 export default class Commands {
     constructor(github) {
         this.github = github;
-        this.commands = [
-            PullsCommand(github)
-        ];
-        this.fallbackCommand = TalkCommand();
+        this.commands = {
+            pulls: PullsCommand(github),
+            talk: TalkCommand()
+        };
+        this.fallbackCommand = this.getCommand("talk");
+    }
+    getCommand(commandName) {
+        return this.commands[commandName];
     }
     run(bot, message, user, data){
-        const commands = this.commands.filter(command => {
+        const commands = Object.keys(this.commands).map(commandName => {
+            return this.commands[commandName];
+        }).filter(command => {
             return command.canHandle(bot, message);
         });
         if (commands.length) {
             commands.forEach(command => {
-                command(user, bot, data);
+                command(bot, message, user, data);
             });
         } else {
-            this.fallbackCommand(user, bot, data);
+            this.fallbackCommand(bot, message, user, data);
         }
     }
 }
