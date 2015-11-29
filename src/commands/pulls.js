@@ -1,8 +1,17 @@
+import q from 'q';
+
 export default PullsCommandConstructor;
 function PullsCommandConstructor(github) {
     function PullsCommand(bot, message, user, projects) {
-        bot.replyToMessage(message, "Ok, wait...").then(() => {
-            return notifyUser(bot, projects, user);
+        bot.replyToMessage(message, "Shit! You ask me again!").then(() => {
+            return getNotifications(projects, user)
+                .then(function(message) {
+                    if(message !== '') {
+                        bot.replyToUser(user, message);
+                    } else {
+                        bot.replyToUser(user, 'Go away! There is nothing to review and I hate you!');
+                    }
+                });
         });
     }
 
@@ -12,9 +21,14 @@ function PullsCommandConstructor(github) {
 
     PullsCommand.notifyUsers = function notifyUsers(bot, projects, users) {
         users.forEach(function(user) {
-            bot.replyToUser(user, 'Ok, man. Now I\'ll try to find a work for you...').then(function(){
-                notifyUser(bot, projects, user);
-            });
+            getNotifications(projects, user)
+                .then(function(message) {
+                    if(message !== '') {
+                        bot.replyToUser(user, 'Get your ass up and Do Review These PRs!').then(function(){
+                            bot.replyToUser(user, message);
+                        });
+                    };
+                });
         });
     };
     return PullsCommand;
@@ -36,11 +50,14 @@ function PullsCommandConstructor(github) {
         return r.length !== 0;
     }
 
-    function notifyUser(bot, projects, user) {
+    function getNotifications(projects, user) {
+        var promises = [];
         projects.forEach(function(project) {
             if (project.users.indexOf(user.github) === -1) {
                 return;
-            }
+            };
+            var defered = q.defer();
+            promises.push(defered.promise);
             github.issues.repoIssues({
                 state: "open",
                 user: project.user,
@@ -48,6 +65,7 @@ function PullsCommandConstructor(github) {
                 labels: project.include_labels.join(' ')
             },
             function (err, prs) {
+                var messagesForProject = '';
                 prs.forEach(function (pr) {
                     if(pr.user.login.toLowerCase() == user.github.toLowerCase()) {
                         return;
@@ -56,14 +74,25 @@ function PullsCommandConstructor(github) {
                         return glabel.name;
                     });
                     if(
-                        array_intersect(pr_labels, project.exclude_labels)
+                            array_intersect(pr_labels, project.exclude_labels)
                             || array_intersect(pr_labels, [user.checked_label])
-                    ) {
+                      ) {
                         return;
                     }
-                    bot.replyToUser(user, `[${project.name}]: ${pr.title} ${pr.html_url} by ${pr.user.login}`);
+                    messagesForProject += `[${project.name}]: ${pr.title} ${pr.html_url} by ${pr.user.login} \n`;
                 });
+                defered.resolve(messagesForProject);
             });
         });
+        return q.allSettled(promises)
+            .then(function(results) {
+                var resultMessage = '';
+                results.forEach(function(res) {
+                    if(res.state == 'fulfilled') {
+                        resultMessage += res.value;
+                    }
+                });
+                return resultMessage;
+            });
     }
 }
