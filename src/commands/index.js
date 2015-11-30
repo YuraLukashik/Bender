@@ -1,5 +1,6 @@
 import PullsCommand from "./pulls";
 import TalkCommand from "./talk";
+import HelpCommand from "./help.js";
 
 export default class Commands {
     constructor(github) {
@@ -8,6 +9,7 @@ export default class Commands {
             pulls: PullsCommand(github),
             talk: TalkCommand()
         };
+        this.commands['help'] = HelpCommand(this.commands);
         this.fallbackCommand = this.getCommand("talk");
     }
     getCommand(commandName) {

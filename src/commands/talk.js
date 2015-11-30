@@ -9,10 +9,14 @@ const phrases = new Phrases([
 ]);
 
 export default function constructor(){
-    function Talk(bot, message, user){
+
+    function Talk(bot, message){
         bot.replyToMessage(message, phrases.phrase());
     }
-    Talk.canHandle = function(){ return false; };
+
+    Talk.canHandle = function() {
+        return false;
+    };
 
     return Talk;
 }
