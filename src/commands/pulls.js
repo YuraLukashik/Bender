@@ -27,12 +27,19 @@ function PullsCommandConstructor(github) {
                         bot.replyToUser(user, 'Get your ass up and Do Review These PRs!').then(function(){
                             bot.replyToUser(user, message);
                         });
-                    };
+                    }
                 });
         });
     };
-    return PullsCommand;
+    PullsCommand.getName = function getName() {
+        return "pulls(show pulls)";
+    };
 
+    PullsCommand.getDescription = function getDescription() {
+        return "lists PRs you have to review";
+    };
+
+    return PullsCommand;
 
     function arrayToLower(arr) {
         return arr.map(function(str) {
@@ -55,7 +62,7 @@ function PullsCommandConstructor(github) {
         projects.forEach(function(project) {
             if (project.users.indexOf(user.github) === -1) {
                 return;
-            };
+            }
             var defered = q.defer();
             promises.push(defered.promise);
             github.issues.repoIssues({
