@@ -1,13 +1,15 @@
 import PullsCommand from "./pulls";
 import TalkCommand from "./talk";
 import HelpCommand from "./help.js";
+import ReposCommand from "./repos.js";
 
 export default class Commands {
     constructor(github) {
         this.github = github;
         this.commands = {
             pulls: PullsCommand(github),
-            talk: TalkCommand()
+            talk: TalkCommand(),
+            hepos: ReposCommand()
         };
         this.commands['help'] = HelpCommand(this.commands);
         this.fallbackCommand = this.getCommand("talk");
