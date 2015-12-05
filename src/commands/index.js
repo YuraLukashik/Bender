@@ -9,7 +9,7 @@ export default class Commands {
         this.commands = {
             pulls: PullsCommand(github),
             talk: TalkCommand(),
-            hepos: ReposCommand()
+            repos: ReposCommand()
         };
         this.commands['help'] = HelpCommand(this.commands);
         this.fallbackCommand = this.getCommand("talk");
