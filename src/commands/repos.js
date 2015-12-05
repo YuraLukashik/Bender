@@ -6,7 +6,7 @@ function ReposCommandConstructor() {
     function Repos(bot, message) {
         let repoMessage = '';
         config.projects.forEach(project => {
-            repoMessage += project.repo +"\n";
+            repoMessage += project.repo + " - " + "https://github.com/" + project.user + "/" + project.repo + "\n";
         });
         bot.replyToMessage(message, repoMessage);
     }
