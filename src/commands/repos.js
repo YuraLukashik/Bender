@@ -6,7 +6,8 @@ function ReposCommandConstructor() {
     function Repos(bot, message) {
         let repoMessage = '';
         config.projects.forEach(project => {
-            repoMessage += project.repo + " - " + "https://github.com/" + project.user + "/" + project.repo + "\n";
+            repoMessage += project.repo + " - " + "https://github.com/" + project.user + "/" + project.repo + "\n"
+                +project.users + "\n";
         });
         bot.replyToMessage(message, repoMessage);
     }
@@ -20,7 +21,7 @@ function ReposCommandConstructor() {
     };
 
     Repos.getDescription = function getDescription() {
-        return 'show a list of repos github';
+        return 'show a list of github repositories';
     };
 
     return Repos;
