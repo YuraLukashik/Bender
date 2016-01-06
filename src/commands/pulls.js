@@ -1,4 +1,5 @@
 import q from 'q';
+import moment from 'moment';
 
 export default PullsCommandConstructor;
 function PullsCommandConstructor(github) {
@@ -73,6 +74,7 @@ function PullsCommandConstructor(github) {
             },
             function (err, prs) {
                 var messagesForProject = '';
+                var prsPromises = [];
                 prs.forEach(function (pr) {
                     if(pr.user.login.toLowerCase() == user.github.toLowerCase()) {
                         return;
@@ -86,9 +88,33 @@ function PullsCommandConstructor(github) {
                       ) {
                         return;
                     }
-                    messagesForProject += `[${project.name}]: ${pr.title} ${pr.html_url} by ${pr.user.login} \n`;
+
+
+                    prsPromises.push(
+                        Promise.resolve(
+                            "-".repeat(80) + "\n" +
+                            `[${project.name}]: ${pr.title} ${pr.html_url} by <!${pr.user.login}>` +
+                            " | " + moment(pr.created_at).fromNow()
+                        )
+                    );
+
+                    prsPromises.push(new Promise(function(res, rej){
+                        github.pullRequests.get({
+                            state: "open",
+                            user: project.user,
+                            repo: project.repo,
+                            number: pr.number
+                        }, function(err, pull) {
+                            res(
+                                "@jenkins deploy " +
+                                pull.head.label.split(":").slice(1).join('')
+                            );
+                        });
+                    }));
                 });
-                defered.resolve(messagesForProject);
+                Promise.all(prsPromises).then(function(messages) {
+                    defered.resolve(messages.join('\n'));
+                });
             });
         });
         return q.allSettled(promises)
