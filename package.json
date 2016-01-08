@@ -22,6 +22,7 @@
     "babel-runtime": "^5.8.34",
     "github": "^0.2.4",
     "mocha": "^2.3.4",
+    "moment": "^2.11.0",
     "node-schedule": "^0.5.1",
     "q": "^1.4.1",
     "slackbots": "^0.4.0"
