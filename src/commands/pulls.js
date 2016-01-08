@@ -107,13 +107,14 @@ function PullsCommandConstructor(github) {
                         }, function(err, pull) {
                             res(
                                 "@jenkins deploy " +
+                                project.name + " " +
                                 pull.head.label.split(":").slice(1).join('')
                             );
                         });
                     }));
                 });
                 Promise.all(prsPromises).then(function(messages) {
-                    defered.resolve(messages.join('\n'));
+                    defered.resolve(messages.join('\n')+'\n');
                 });
             });
         });
