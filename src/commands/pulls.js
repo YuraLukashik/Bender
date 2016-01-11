@@ -114,7 +114,9 @@ function PullsCommandConstructor(github) {
                     }));
                 });
                 Promise.all(prsPromises).then(function(messages) {
-                    defered.resolve(messages.join('\n')+'\n');
+                    defered.resolve(messages.filter(function(message){
+                            return message != ''
+                        }).join('\n'));
                 });
             });
         });
@@ -123,6 +125,9 @@ function PullsCommandConstructor(github) {
                 var resultMessage = '';
                 results.forEach(function(res) {
                     if(res.state == 'fulfilled') {
+                        if(resultMessage !== '') {
+                            resultMessage += '\n';
+                        }
                         resultMessage += res.value;
                     }
                 });
