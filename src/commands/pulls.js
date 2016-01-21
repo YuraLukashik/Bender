@@ -106,7 +106,7 @@ function PullsCommandConstructor(github) {
                             number: pr.number
                         }, function(err, pull) {
                             res(
-                                "@jenkins deploy staging" +
+                                "@jenkins deploy staging " +
                                 project.name + " " +
                                 pull.head.label.split(":").slice(1).join('')
                             );
